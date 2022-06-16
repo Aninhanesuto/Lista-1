@@ -1,0 +1,7 @@
+N = int(input())
+N2 = input()
+vezes = N * N2
+if (N%2 != 0) and vezes == ('.' * N):
+	print("S")
+if (N%2 == 0) and vezes == ('.' * N):
+	print("S")
