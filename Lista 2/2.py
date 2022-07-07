@@ -1,6 +1,6 @@
 def Pitagorico(a,b,c):
 	if (a ** 2) + (b ** 2) == c **2:
-		return True
+		print("O a,b e c são uma tripla pitagórica")
 	else:
-		return False
+		print("O a,b e c não são uma tripla pitagórica")
 print(Pitagorico(33,56,65))
