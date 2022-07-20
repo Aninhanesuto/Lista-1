@@ -11,12 +11,13 @@
 
 #print(palindrome("racecar"))
 #print(palindrome("computer"))
-s = int(input("Digite um número de 4 algarismos: "))
-d = s//100
-e = s//1000 % 10
-def palindrome(s):
-	if d == s:
-		return True
+def palindrome(n,m):
+	if n > m:
+		return n
+	elif  n // 100 == n % 100:
+			print(n)
+			return palindrome(n+1, m)
 	else:
-		return False
-print(e)
+			return palindrome(n+1, m)
+
+print(palindrome(1000, 9999))
