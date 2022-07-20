@@ -1,4 +1,4 @@
-from os import system, name  # Funções usadas para limpar a tela do terminal
+from os import system, name  # Funções importadas para limpar a tela do terminal
 
 def limpaTela():
     """
@@ -13,6 +13,8 @@ def Troco(vt):
     Essa função recursiva calcula o troco e exibe o valor na tela
     Parâmetros: 
     * vt: O troco calculado na função maquina
+    Return:
+    - Essa função retorna o valor do troco(vt)
     """
     if vt <= 0: return
     if vt >= 100:
@@ -52,6 +54,25 @@ def Troco(vt):
         print("R$ 0.01")
         Troco(round(vt - 0.01,2))
 
+def verificar(valor, convert):
+    """
+    Essa função recursiva, tenta converter as variaveis opcao e dinheiro para respectivamente int e float, 
+    caso ela não consiga ela chama novamente a funcao e pede pro usuário digitar novamente um valor até que dê 
+    um valor válido.
+    Parâmetros: 
+    * valor: Essa será a variável que será convertida
+    ** convert: Esse parâmetro será int ou float, para converter o parâmetro valor dependendo de cada caso.
+    Return:
+    - Essa função retorna o valor convertido, ou uma mensagem pedindo o usuário que digite novamente até que o usuário
+    digite um valor válido.
+
+    """
+    try: #Tenta fazer a conversão do valor digitado para int ou float
+        x = convert(valor)
+        return x
+    except : #Se não for possível fazer a conversão , uma exceção é lançada
+        return verificar(input("Opção não reconhecida!, Digite Novamente: "), convert)
+
 def maquina(valor, valorDepositado = 0):
     """
     Essa função irá pedir para o usuário inserir o dinheiro e mostrará na tela o valor pago, caso esse valor 
@@ -61,9 +82,10 @@ def maquina(valor, valorDepositado = 0):
     Parâmetros: 
     * valor = Valor do produto dado na função menu
     **  valorDepositado = valor depositado na maquina automático, esse parâmetro é opcional e começa com o valor zero.
+    Return: Retorna o valor pago e o troco caso haja troco.
 
     """
-    dinheiro = float(input("Coloque o seu dinheiro: "))
+    dinheiro = verificar(input("Coloque o seu dinheiro: "), float)
     if dinheiro <0:
         print("Operação Inválida!")
         return maquina(valor, valorDepositado)
@@ -84,18 +106,17 @@ def maquina(valor, valorDepositado = 0):
 
 def menu(vodka, cerveja, catuaba, semlimite, bafo, fat):
     """
-    Essa função menu, mostra na tela as principais bebidas da maquina automática na loja.
+    Essa função menu, mostra na tela as principais bebidas da maquina automática na loja e controla as outras opções da máquina.
     Parâmetros: 
     * vodka: se refere a quantidade de Shot de Vodka
-    ** cerveja: se refere a quantidade de bebida Cerveja
-    *** catuaba: se refere a quantidade de bebida Catuaba
-    **** sem limite: se refere a quantidade de bebida Sem Limite
-    ***** bafo: se refere a quantidade de bebida Bafo de Tigre
-    ******fat: Esse parâmetro se refere ao faturamento total da loja
+    * cerveja: se refere a quantidade de bebida Cerveja
+    *catuaba: se refere a quantidade de bebida Catuaba
+    *sem limite: se refere a quantidade de bebida Sem Limite
+    *bafo: se refere a quantidade de bebida Bafo de Tigre
+    *fat: Esse parâmetro se refere ao faturamento total da loja
     """
-    RST     = '\033[00m'
-    RED ="\033[0;31m"
-    print(RED)
+    RED ="\033[0;31m" # Muda a cor do Terminal para vermelho
+    print(RED) # Muda a cor do Terminal para vermelho
     print("+---------------BOTEQUINHO XFX-------------+")
     print("| 1 - SHOT DE VODKA ................R$2,50 |")
     print("| 2 - CERVEJA.......................R$4,00 |")
@@ -106,7 +127,7 @@ def menu(vodka, cerveja, catuaba, semlimite, bafo, fat):
     print("| 6 - Informações Internas                 |")
     print("| 7 - Finalizar                            |")
     print("+------------------------------------------+")
-    opcao = int(input("Escolha uma opção: "))
+    opcao = verificar(input("Escolha uma opção: "), int)
     
     if opcao == 1:
         if vodka <= 0:
@@ -327,14 +348,9 @@ Faturamento: R$:{fat:.02f}
     
 def main ():
     """
-    A função main é a função principal, na qual eu chamarei a função menu, tendo na loja um estoque inicial de:
-     5 - Shot de Vodka
-    5 - Cerveja
-    5 - Sem Limite
-    5 - Bafo de Tigre
-    E por fim o último parâmetro da função menu é zero, pois o faturamento inicial da loja é zero.
+    A função main é a função principal, na qual eu chamarei a função menu e função limparTela
     """
     limpaTela()
-    menu(5,5,5,5,5,0)
+    menu(5,5,5,5,5,0) # Os Estoques Iniciais das bebidas são 5 e o faturamento inicial é zero.
 
 main ()
